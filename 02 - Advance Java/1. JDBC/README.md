@@ -60,3 +60,225 @@ let list out agenda what we will do and understand how actuallt things work
 20. RowSet
 
 21. ETC........
+
+---
+
+## Introduction To JDBC -
+
+Java database connectivity is a java api that allows java application to connect with data base , send queries and get result set back.
+
+**Why Jdbc ?**
+
+java program cannot talk directly with dtabase hence jdbc act as a bridge between java application and database .
+
+---
+
+## JDBC Architecture
+```
+java -> Driver -> database.
+```
+
+Steps to connect with database -
+
+1. Load and Register Driver
+2. Establish Connection
+3. Create Statement
+4. Execute Query
+5. resultSet
+6. Close Connection....
+
+> let see in depth
+
+So , let try to understand it like a story - you want to go Chennai from Bhopal . so as by taking care of Language difference you have to arrange a translator who can help you in communication . similarly **java** and **database** are two different entity which cannot talk to each another hence need a Translator called ad - **Driver** . here , driver is a translator between java and database which took sql queries from java app and transmit it towards the db and take resultset back from there . 
+
+now , next thing you need a road to go chennai from bhopal hence you used - NH - 44 . so , similarly you need to establish a **Connection** between java app to database . 
+
+now next you need a vehicle . Similarly **Statement** is a Vehicle which carry Sql Queries from java app and send it to db and get back resultset towards java app.
+
+**ResultSet** is like a container which put inside a vehicle known as **Statement** containing results gets after execution of Quries .
+
+in the end need to **Close the Connection** .
+
+**Why do we need to close the JDBC Connection?**
+
+when you are connecting db using jdbc , you are using resources such as - *Memory* , *Network Socket , *Database Server* etc . 
+
+These resources are limited.
+
+hence you need to free them to avoid - *memory leakage* , *Security Risk* , *Database Performance Down* etc.....
+
+---
+
+## Drivers And It's Types -
+
+Drivers are Translator in jdbc which translate metadata of java which contains information reagarding db (Quries to be executed) which is not directly understable to data base hence need to translated first according to Database Firms . Hence , this is done by **Driver**
+
+### Types Of Drivers
+
+there are majorly four types of Drivers -
+
+**1. Type 1 (Jdbc-Odbc Driver / Bridge Driver)**
+
+```
+java -> jdbc (Driver) -> Odbc (Driver) -> Data Base
+```
+
+here , Odbc stands for Open database connectivity . languages such as c/c++ uses odbc as for database connectivity . java just modify odbc as add one more step before odbc driver jdbc driver will translate java data into odbc specifics than odbc will work as it . thus they increases speed .
+
+but still it is slow and only Windows Specific beacause odbc is only window supported. hence intoduced type 2 -
+
+**2. Type 2 (Native-API Driver)**
+
+similar to odbc but having differnce as instead of odbc driver here native api drivers used which are built by different vendors .
+
+```
+java -> jdbc(Driver) -> Native-API (Driver) - data base
+```
+thus it is now paltform independent but still Slow.
+
+**3. Type 3 (Network Protocol Driver)**
+
+hence a network based type 3 driver introduced which connect directly with db servers .
+
+it is reliavble , fast and used for large web applications where multiple databases connected .
+
+**4. Type 4 (Thin/Direct Driver)**
+
+```
+java -> (Driver) -> data base
+```
+
+it is faster among all above . as here translation took place within a single step .
+
+---
+
+## Now Let Code and establish a connection -
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class Connection1{
+
+public static Connection getConnection(){
+    Connection c = null;
+    String url = "jdbc:mysql://localhost:3306/namaste2";
+    String name = "root";
+    String pass = "admin";
+  try{
+  c = DriverManager.getConnection(url,name,pass); 
+}
+catch(Exception e){
+e.printStackTrace();
+}
+}
+return c;
+
+}
+```
+> this is a code to establish a connection
+
+### Now let try to Execute Some queries - 
+
+first  create a new class - 
+
+```java
+class Namaste{
+
+public static void main(String args[]){
+
+}
+
+}
+```
+
+try to code inside main method -
+
+```
+Connection c = Connection1.getConnection();
+```
+
+connection established .....
+
+now create try-catch-finally...
+
+```java
+try{
+ //create a statement -
+
+Statement st = c.createStatement();
+String createTable = "CREATE TABLE IF NOT EXISTS students (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), age INT)";
+int a = st.executeUpdate(createTable);
+	        System.out.println("table created" + a);
+//creating a table
+}
+catch(Exception e){
+e.printStackTrace();
+}
+finally{
+try{
+c.close()
+}
+catch(Exception e){
+e.printStackTrace();
+}
+}
+```
+now similarly can write a insert query and also can fetch records using resultset - 
+
+complete code will we like this - 
+
+```java
+package namasteJdbc;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Namaste {
+
+	 public static void main(String[] args) {
+	        Connection conn = Connection1.getConnection(); 
+	        try {
+	        Statement st = conn.createStatement();
+	        String createTable = "CREATE TABLE IF NOT EXISTS students (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), age INT)";
+	        int a = st.executeUpdate(createTable);
+	        System.out.println("table created" + a);
+	        
+	        String insert = "insert into students( name,age) values('hitman',21)";
+	        int b = st.executeUpdate(insert);
+            System.out.println("inserted"+b);
+	        
+	        String select = "select * from students";
+	        ResultSet rs = st.executeQuery(select);
+	        while(rs.next()) {
+	        	System.out.print(rs.getInt("id")+rs.getString("name")+rs.getInt("age"));
+	        }
+	        System.out.println();
+	        st.close();
+	        }
+	        catch(Exception e) {
+	        	e.printStackTrace();
+	        }
+	        finally{
+	        	try {
+	        	conn.close();
+	        	}
+	        	catch(Exception e) {
+	        		e.printStackTrace();
+	        	}
+	        }
+	    }
+
+}
+
+
+```
+
+
+
+
+
+
+
