@@ -275,6 +275,334 @@ public class Namaste {
 
 
 ```
+## CRUD -
+
+```java
+package namasteJdbc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class Crud {
+	
+	public static Scanner sc = new Scanner(System.in);
+	public static Connection c = Connection1.getConnection();
+	
+	public static void createStudent() {
+		try {
+		
+		
+		System.out.println("please enter roll no.");
+		int rollNo = sc.nextInt();
+		
+		
+		System.out.println("please enter Name");
+		String name = sc.next();
+	
+		
+		System.out.println("please enter Address");
+		String address = sc.next();
+		
+		
+		String query = "insert into students2 (rollNo , name , address) values (? , ? , ?)";
+		PreparedStatement pr = c.prepareStatement(query);
+		pr.setInt(1, rollNo);
+		pr.setString(2, name);
+		pr.setString(3, address);
+		pr.executeUpdate();
+		pr.close();
+		System.out.println("Student successfully created with rollNo:- " + rollNo);
+		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public static void readStudent() {
+		System.out.println("enter 1 to read all");
+		System.out.println("enter 2 to read by Roll No");
+		int enter = sc.nextInt();
+		try {
+		switch(enter) {
+		case 1:
+			String Query = "select * from students2";
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery(Query);
+			while(rs.next()) {
+				System.out.println(rs.getInt("rollNo") + " " + rs.getString("name") + " " + rs.getString("address"));
+			}
+			s.close();
+			break;
+			
+		case 2:
+			System.out.println("please enter a rollNo");
+			int rollNo = sc.nextInt();
+			String Query2 = "select * from students2 where rollNo =" + rollNo;
+			Statement s2 = c.createStatement();
+			ResultSet rs2 = s2.executeQuery(Query2);
+			if(rs2==null) {
+				System.out.println("No student is present having roll no. " +rollNo);
+				return;
+			}
+			while(rs2.next()) {
+				System.out.println(rs2.getInt("rollNo") + " " + rs2.getString("name") + " " + rs2.getString("address"));
+			}
+			
+			s2.close();
+			break;
+		default :
+			System.out.println("wrong input");
+			
+		}
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+	}
+	public static void updateStudent() {
+		
+		System.out.println("please enter a rollNo");
+		int rollNo = sc.nextInt();
+		
+		try {
+			String Query2 = "select * from students2 where rollNo =" + rollNo;
+			Statement s2 = c.createStatement();
+			ResultSet rs2 = s2.executeQuery(Query2);
+			if(rs2!=null) {
+				
+				System.out.println("student is present with rollNo - " + rollNo + " having following details");
+				while(rs2.next()) {
+					System.out.println(rs2.getInt("rollNo") + " " + rs2.getString("name") + " " + rs2.getString("address"));
+				}
+				
+				System.out.println("do you really want to edit Yes - press 1 / No - press 0 ?");
+				int c = sc.nextInt();
+				
+				switch(c) {
+				case 1 :
+					System.out.println("please enter new details for student having roll no."  + rollNo);
+					
+					System.out.println("please enter new Name");
+					String name = sc.next();
+				
+					
+					System.out.println("please enter new Address");
+					String address = sc.next();
+					
+					String Query = "update students2 set name ="+"'"+name+"'"+",address ="+"'"+address+"'"+"where rollNo ="+rollNo ;
+					int a = s2.executeUpdate(Query);
+					if(a!=0) {
+						System.out.println("Successfully updated");
+						s2.close();
+					}
+					else {
+					 System.out.println("something went wrong");
+					}
+					break;
+				case 0:
+					System.out.println("Thank you");
+					break;
+				default:
+					System.out.println("wrong input");
+				}
+				
+			}
+			else {
+				System.out.println("no student is present with this rollNo" + rollNo);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public static void deleteStudent() {
+		
+		System.out.println("please enter a rollNo");
+		int rollNo = sc.nextInt();
+		
+		try {
+			String Query2 = "select * from students2 where rollNo =" + rollNo;
+			Statement s2 = c.createStatement();
+			ResultSet rs2 = s2.executeQuery(Query2);
+			if(rs2!=null) {
+				
+				System.out.println("student is present with rollNo - " + rollNo + " having following details");
+				while(rs2.next()) {
+					System.out.println(rs2.getInt("rollNo") + " " + rs2.getString("name") + " " + rs2.getString("address"));
+				}
+				
+				System.out.println("do you really want to delete Yes - press 1 / No - press 0 ?");
+				int c = sc.nextInt();
+				
+				switch(c) {
+				case 1 :
+					
+					String Query = "delete from students2 where rollNo="+rollNo;
+					int a = s2.executeUpdate(Query);
+					if(a!=0) {
+						System.out.println("Successfully deleted");
+						s2.close();
+					}
+					else {
+					 System.out.println("something went wrong");
+					}
+					break;
+				case 0:
+					System.out.println("Thank you");
+					break;
+				default:
+					System.out.println("wrong input");
+				}
+				
+			}
+			else {
+				System.out.println("no student is present with this rollNo" + rollNo);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public static void main(String[] args) {
+		
+		try {
+			
+			Statement st = c.createStatement();
+	        String createTable = "CREATE TABLE IF NOT EXISTS students2 (rollNo INT PRIMARY KEY , name VARCHAR(100), address VARCHAR(100))";
+	        int a = st.executeUpdate(createTable);
+	        System.out.println("table created" + a);
+			
+			boolean crud = true;
+			while(crud) {
+			System.out.println("Welcome to Student management System");
+			System.out.println("enter 1 for create");
+			System.out.println("enter 2 to read ");
+			System.out.println("enter 3 for update");
+			System.out.println("enter 4 for delete");
+			System.out.println("enter 5 to exit");
+			Scanner sc = new Scanner(System.in);
+			int enter = sc.nextInt();
+			switch(enter) {
+			case 1 :
+				createStudent();
+				break;
+			case 2 :
+				readStudent();
+				break;
+			case 3 :
+				updateStudent();
+				break;
+			case 4 :
+				deleteStudent();
+				break;
+			case 5 :
+				System.exit(0);
+				break;
+			default :
+				System.out.println("please enter a valid no.");
+			}
+			}
+			 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				c.close();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+```
+## Statement vs PreparedStatement
+
+(There are different two ways in jdbc to send query)
+
+### Statement — "Raw Query Sender"
+
+whenever you send query compiler will compile and execute again again 
+
+```
+String name = "Rohan";
+String query = "SELECT * FROM students WHERE name = '" + name + "'";
+Statement st = con.createStatement();
+ResultSet rs = st.executeQuery(query);
+```
+
+- everytime new query will form
+- String Concatenation (chances of Errors high)
+- SQL Injection (possibility of attack)
+- perfermance slow
+
+### PreparedStatement "Smart & Secure Query Sender"
+
+Queries Compile once and Use Multiple times .
+Only values get change . 
+```
+PreparedStatement ps = con.prepareStatement(
+    "SELECT * FROM students WHERE name = ?"
+);
+ps.setString(1, "Rohan");
+ResultSet rs = ps.executeQuery();
+```
+- Placeholders (?) for dynamic inputs
+- SQL Injection se protection 🔐
+- Performance (Fast)
+
+| Feature              | Statement | PreparedStatement |
+| -------------------- | --------- | ----------------- |
+| Query compile        | Har baar  | Sirf pehli baar   |
+| Dynamic data         | ❌ risky   | ✔ simple with `?` |
+| SQL Injection safety | ❌ no      | ✔ yes             |
+| Speed                | Slow      | Fast              |
+| Reusability          | ❌         | ✔                 |
+| Batch processing     | ❌         | ✔ best choice     |
+
+**SQL Injection Example -**
+User input
+```
+' or '1'='1
+```
+statement will -
+```
+SELECT * FROM students WHERE name='' OR '1'='1'
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
