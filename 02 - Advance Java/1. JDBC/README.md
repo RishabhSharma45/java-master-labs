@@ -581,6 +581,12 @@ statement will -
 ```
 SELECT * FROM students WHERE name='' OR '1'='1'
 ```
+---
+
+## Stored Procedure 
+
+procedure is a sql program which wrote into database containing one or more sql queries with logics such as (if-else , loop etc).
+
 
 
 
