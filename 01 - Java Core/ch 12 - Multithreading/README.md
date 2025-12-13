@@ -177,6 +177,18 @@ B. Runnable
 C. Object
 D. System
 
+Q48. Starvation ka matlab?
+A. Deadlock
+B. Thread ko CPU na milna
+C. Infinite loop
+D. Crash
+
+Q49. Livelock kya hota hai?
+A. Thread dead
+B. Thread busy but no progress
+C. Deadlock
+D. Starvation
+
 ```
 
 
