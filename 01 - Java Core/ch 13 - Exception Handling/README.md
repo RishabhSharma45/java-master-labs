@@ -124,9 +124,13 @@ similar , throws is used as an sign for a method that it may contain exception t
 //Q3. Write a program to demonstrate multiple catch blocks (e.g., Arithmetic + NullPointer + Generic Exception).
 
          //	Interview Tip 🧩:
+		 
         //  Order of catch blocks matters
+		
        //		Always keep specific → general
+	   
       //		Agar tu catch(Exception e) pehle likh dega, to compiler error dega:
+	  
      //		👉 “Unreachable catch block for ArithmeticException”
 
 //Q4. Write a program to demonstrate finally block — even when an exception occurs, the finally block should always execute.
@@ -134,13 +138,17 @@ similar , throws is used as an sign for a method that it may contain exception t
 //Q5: Write a Java program where you throw your own exception using throw keyword (for example, throw exception if age < 18).
 
            finally executes before the method actually throws the exception to JVM.
+		   
            Interview Tip:
            
            throw → used to manually throw exception
+		   
            throws → used to declare exception in method signature (compiler-level warning avoid karne ke liye)
+		   
            👀 (Next Q6 me yehi dono compare karenge!)
 
            Pro Tip:
+		   
            Instead of ArithmeticException, tu custom exception bana sakta hai — e.g., UnderAgeException (we’ll do that in Q8 😎).
 		 
 
@@ -156,36 +164,66 @@ similar , throws is used as an sign for a method that it may contain exception t
 
 //level 2
 
-//Q11: public static int q11() {
-		    try {
-		        System.out.println("try");
-		        return 10;
-		    }
-		    catch(Exception e) {
-		        System.out.println("catch");
-		    }
-		    finally {
-		        System.out.println("finally");
-		    }
-		    return 20;
-		}
+//Q11:
+```java
+public static int q11() {
 
-  //Q12: public static int q12() {
 		    try {
+			
 		        System.out.println("try");
+				
 		        return 10;
-		    } 
+				
+		    }
 		    catch(Exception e) {
+			
 		        System.out.println("catch");
-		        return 20;
-		    } 
+				
+		    }
+			
 		    finally {
+			
 		        System.out.println("finally");
+				
+		    }
+			
+		    return 20;
+			
+		}
+```
+
+//Q12:
+```java
+ public static int q12() {
+  
+		    try {
+			
+		        System.out.println("try");
+				
+		        return 10;
+				
+		    } 
+			
+		    catch(Exception e) {
+			
+		        System.out.println("catch");
+				
+		        return 20;
+				
+		    } 
+			
+		    finally
+			{
+		        System.out.println("finally");
+				
 		        return 30;
 		    }
 		}
+```
 
-  //Q13: public static int q13() {
+  //Q13: 
+```java
+public static int q13() {
 		    int x = 10;
 		    try {
 		        System.out.println("try");
@@ -201,8 +239,11 @@ similar , throws is used as an sign for a method that it may contain exception t
 		    }
 		    return x;
 		}
+```
 
- //Q14: public static int q14() {
+ //Q14: 
+ ```java
+public static int q14() {
 		    try {
 		        System.out.println("try");
 		        return getValue();
@@ -215,8 +256,11 @@ similar , throws is used as an sign for a method that it may contain exception t
 		    }
 		    return 100;
 		}
+```
 
-  //Q15: public static int q15() {
+  //Q15:
+  ```java
+  public static int q15() {
 		    try {
 		        System.out.println("try");
 		        return 10;
@@ -230,12 +274,17 @@ similar , throws is used as an sign for a method that it may contain exception t
 		        return 30;
 		    }
 		}
+```
 
           Agar finally block me return likha ho,
+		  
           to pehle ke saare returns ignore ho jaate hain.
+		  
           Sirf finally ka return hi consider hota hai.
 
-  //16: public static void q16() {
+  //16:
+  ```java
+  public static void q16() {
 		    try {
 		        System.out.println("try");
 		        int a = 10 / 0;
@@ -249,8 +298,11 @@ similar , throws is used as an sign for a method that it may contain exception t
 		    }
 		    System.out.println("end");
 		}
+```
 
-  //Q17: public static void q17() {
+  //Q17: 
+  ```java
+  public static void q17() {
 		    try {
 		        System.out.println("try");
 		        System.exit(0);
@@ -263,8 +315,11 @@ similar , throws is used as an sign for a method that it may contain exception t
 		    }
 		    System.out.println("end");
 		}
+```
 
-  //Q18: public static void q18() {
+  //Q18: 
+  ```java
+  public static void q18() {
   			 try (MyResource r = new MyResource()) {
 	            r.use();
 	        } catch (Exception e) {
@@ -279,8 +334,11 @@ similar , throws is used as an sign for a method that it may contain exception t
 		        System.out.println("closing");
 		    }
 		}
+```
 
-   //Q19: public static int q19() {
+   //Q19: 
+   ```java
+   public static int q19() {
 	        try (MyRes r = new MyRes()) {
 	            System.out.println("try");
 	            return 10;
@@ -291,8 +349,11 @@ similar , throws is used as an sign for a method that it may contain exception t
 	            return 20;
 	        }
 	    }
+```
 
-    //Q20: public static void q20() {
+    //Q20: 
+	```java
+	public static void q20() {
 		    try {
 		        System.out.println("outer try");
 		        try {
@@ -308,72 +369,117 @@ similar , throws is used as an sign for a method that it may contain exception t
 		    } finally {
 		        System.out.println("outer finally");
 		    }}
+```
 
 
 Q1. Java me Exception kya hoti hai?
+
 A. JVM instruction
+
 B. Error message
+
 C. Object
+
 D. Method
 
 Q2. Exception Handling ka package kaunsa hai?
+
 A. java.io
+
 B. java.util
+
 C. java.lang
+
 D. java.exception
 
 Q3. finally block kaunsa nahi kar sakta?
+
 A. resource close
+
 B. exception handle
+
 C. execute hona
+
 D. JVM control lena
 
 Q4.finally block me exception aaye to?
+
 A. ignore
+
 B. override hota
+
 C. program crash
+
 D. JVM handle
 
 Q5. throw keyword ka use kya hai?
+
 A. Exception catch karna
+
 B. Exception create karna
+
 C. Exception forward karna
+
 D. JVM start karna
 
 Q6. throw keyword kaunsa exception throw karta hai?
+
 A. JVM generated
+
 B. Programmer generated
+
 C. OS generated
+
 D. Compiler generated
 
 Q7. throw ke baad code likhna?
+
 A. allowed
+
 B. allowed with try
+
 C. unreachable
+
 D. optional
 
 Q8. catch block order ka rule kya hai?
+
 A. Parent first
+
 B. Child first
+
 C. Random
+
 D. JVM decide karta
 
 Q9. Throwable class ka direct child kaunsa hai?
+
 A. Error
+
 B. Exception
+
 C. RuntimeException
+
 D. IOException
 
 Q10. JVM exception ko kaise search karta hai?
+
 A. top to bottom
+
 B. bottom to top
+
 C. left to right
+
 D. random
 
 * Multiple catch me same exception likhna?
+
 A. allowed
+
 B. warning
+
 C. compile error
+
 D. runtime error
 
 
