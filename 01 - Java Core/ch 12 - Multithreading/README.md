@@ -92,6 +92,93 @@ now let's practice these Questions -
 
 // Level 1 -
 
+```
+Q8. Java me ek program me minimum kitne thread hote hain?
+A. 0
+B. 1
+C. 2
+D. Depends
+
+Q9. Main thread ka naam kya hota hai?
+A. system
+B. main
+C. primary
+D. default
+
+Q19. Java me thread scheduling kaun karta hai?
+A. Compiler
+B. JVM
+C. OS
+D. Programmer
+
+Q18. Thread life cycle me sabse important state?
+A. New
+B. Runnable
+C. Running
+D. Dead
+
+Q13. Thread kab Running state me jata hai?
+A. start() par
+B. JVM choice se
+C. sleep() par
+D. yield() par
+
+Q22. yield() method kis class ka hai?
+A. Object
+B. Runnable
+C. Thread
+D. System
+
+Q26. sleep() lock release karta hai?
+A. Yes
+B. No
+C. Depends
+D. JVM decide
+
+Q24. join() kis type ka method hai?
+A. static
+B. final
+C. non-static
+D. private
+
+Q31. Synchronization ka main aim?
+A. Speed badhana
+B. Data consistency
+C. Memory save
+D. Deadlock
+
+32. Synchronization kis problem ko solve karta hai?
+A. Deadlock
+B. Starvation
+C. Race condition
+D. Livelock
+
+Q34. synchronized method lock kis par lagata hai?
+A. Method
+B. Class
+C. Object
+D. Thread
+
+Q38. Deadlock ka solution?
+A. sleep
+B. yield
+C. Lock ordering
+D. stop
+
+Q42. wait() method kis block me call hota hai?
+A. try
+B. catch
+C. synchronized
+D. finally
+
+Q41. wait(), notify(), notifyAll() kis class ke methods hain?
+A. Thread
+B. Runnable
+C. Object
+D. System
+
+```
+
 
    
 
